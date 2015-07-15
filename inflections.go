@@ -9,6 +9,9 @@ inflection.Singularize("people") => "person"
 inflection.Singularize("People") => "Person"
 inflection.Singularize("PEOPLE") => "PERSON"
 
+inflection.Plural("FancyPerson") => FancydPeople
+inflection.Singularize("FancyPeople") => FancydPerson
+
 inflection.AddUncountable("fish")
 inflection.AddIrregular("person", "people")
 inflection.AddPlural("(bu)s$", "${1}ses") // bus => buses / BUS => BUSES / Bus => Buses

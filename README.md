@@ -13,6 +13,9 @@ inflection.Plural("PERSON") => PEOPLE
 inflection.Singularize("people") => "person"
 inflection.Singularize("People") => "Person"
 inflection.Singularize("PEOPLE") => "PERSON"
+
+inflection.Plural("FancyPerson") => FancydPeople
+inflection.Singularize("FancyPeople") => FancydPerson
 ```
 
 
