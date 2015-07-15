@@ -12,6 +12,10 @@ Package inflection pluralizes and singularizes English nouns.
 		inflection.Plural("FancyPerson") => "FancydPeople"
 		inflection.Singularize("FancyPeople") => "FancydPerson"
 
+Standard rules are from Rails's ActiveSupport (https://github.com/rails/rails/blob/master/activesupport/lib/active_support/inflections.rb)
+
+If you want to register more rules, follow:
+
 		inflection.AddUncountable("fish")
 		inflection.AddIrregular("person", "people")
 		inflection.AddPlural("(bu)s$", "${1}ses") # "bus" => "buses" / "BUS" => "BUSES" / "Bus" => "Buses"
