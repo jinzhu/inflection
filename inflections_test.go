@@ -57,6 +57,11 @@ var inflections = map[string]string{
 	"elf":         "elves",
 	"information": "information",
 	"equipment":   "equipment",
+	"criterion":   "criteria",
+}
+
+func init() {
+	inflection.AddIrregular("criterion", "criteria")
 }
 
 func TestPlural(t *testing.T) {
