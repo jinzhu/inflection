@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/qor/qor/utils"
+	"github.com/qor/inflection"
 )
 
 var inflections = map[string]string{
@@ -61,15 +61,15 @@ var inflections = map[string]string{
 
 func TestPlural(t *testing.T) {
 	for key, value := range inflections {
-		if v := utils.Plural(strings.ToUpper(key)); v != strings.ToUpper(value) {
+		if v := inflection.Plural(strings.ToUpper(key)); v != strings.ToUpper(value) {
 			t.Errorf("%v's plural should be %v, but got %v", strings.ToUpper(key), strings.ToUpper(value), v)
 		}
 
-		if v := utils.Plural(strings.Title(key)); v != strings.Title(value) {
+		if v := inflection.Plural(strings.Title(key)); v != strings.Title(value) {
 			t.Errorf("%v's plural should be %v, but got %v", strings.Title(key), strings.Title(value), v)
 		}
 
-		if v := utils.Plural(key); v != value {
+		if v := inflection.Plural(key); v != value {
 			t.Errorf("%v's plural should be %v, but got %v", key, value, v)
 		}
 	}
@@ -77,15 +77,15 @@ func TestPlural(t *testing.T) {
 
 func TestSingular(t *testing.T) {
 	for key, value := range inflections {
-		if v := utils.Singular(strings.ToUpper(value)); v != strings.ToUpper(key) {
+		if v := inflection.Singular(strings.ToUpper(value)); v != strings.ToUpper(key) {
 			t.Errorf("%v's singular should be %v, but got %v", strings.ToUpper(value), strings.ToUpper(key), v)
 		}
 
-		if v := utils.Singular(strings.Title(value)); v != strings.Title(key) {
+		if v := inflection.Singular(strings.Title(value)); v != strings.Title(key) {
 			t.Errorf("%v's singular should be %v, but got %v", strings.Title(value), strings.Title(key), v)
 		}
 
-		if v := utils.Singular(value); v != key {
+		if v := inflection.Singular(value); v != key {
 			t.Errorf("%v's singular should be %v, but got %v", value, key, v)
 		}
 	}
