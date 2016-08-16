@@ -58,8 +58,30 @@ var inflections = map[string]string{
 	"criterion":   "criteria",
 }
 
+// storage is used to restore the state of the global variables
+// on each test execution, to ensure no global state pollution
+type storage struct {
+	singulars    RegularSlice
+	plurals      RegularSlice
+	irregulars   IrregularSlice
+	uncountables []string
+}
+
+var backup = storage{}
+
 func init() {
 	AddIrregular("criterion", "criteria")
+	copy(backup.singulars, singularInflections)
+	copy(backup.plurals, pluralInflections)
+	copy(backup.irregulars, irregularInflections)
+	copy(backup.uncountables, uncountableInflections)
+}
+
+func restore() {
+	copy(singularInflections, backup.singulars)
+	copy(pluralInflections, backup.plurals)
+	copy(irregularInflections, backup.irregulars)
+	copy(uncountableInflections, backup.uncountables)
 }
 
 func TestPlural(t *testing.T) {
@@ -95,6 +117,7 @@ func TestSingular(t *testing.T) {
 }
 
 func TestAddPlural(t *testing.T) {
+	defer restore()
 	ln := len(pluralInflections)
 	AddPlural("", "")
 	if ln+1 != len(pluralInflections) {
@@ -103,6 +126,7 @@ func TestAddPlural(t *testing.T) {
 }
 
 func TestAddSingular(t *testing.T) {
+	defer restore()
 	ln := len(singularInflections)
 	AddSingular("", "")
 	if ln+1 != len(singularInflections) {
@@ -111,6 +135,7 @@ func TestAddSingular(t *testing.T) {
 }
 
 func TestAddIrregular(t *testing.T) {
+	defer restore()
 	ln := len(irregularInflections)
 	AddIrregular("", "")
 	if ln+1 != len(irregularInflections) {
@@ -119,6 +144,7 @@ func TestAddIrregular(t *testing.T) {
 }
 
 func TestAddUncountable(t *testing.T) {
+	defer restore()
 	ln := len(uncountableInflections)
 	AddUncountable("", "")
 	if ln+2 != len(uncountableInflections) {
@@ -155,6 +181,7 @@ func TestGetUncountable(t *testing.T) {
 }
 
 func TestSetPlural(t *testing.T) {
+	defer restore()
 	SetPlural(RegularSlice{{}, {}})
 	if len(pluralInflections) != 2 {
 		t.Errorf("Expected len 2, got %d", len(pluralInflections))
@@ -162,6 +189,7 @@ func TestSetPlural(t *testing.T) {
 }
 
 func TestSetSingular(t *testing.T) {
+	defer restore()
 	SetSingular(RegularSlice{{}, {}})
 	if len(singularInflections) != 2 {
 		t.Errorf("Expected len 2, got %d", len(singularInflections))
@@ -169,6 +197,7 @@ func TestSetSingular(t *testing.T) {
 }
 
 func TestSetIrregular(t *testing.T) {
+	defer restore()
 	SetIrregular(IrregularSlice{{}, {}})
 	if len(irregularInflections) != 2 {
 		t.Errorf("Expected len 2, got %d", len(irregularInflections))
@@ -176,6 +205,7 @@ func TestSetIrregular(t *testing.T) {
 }
 
 func TestSetUncountable(t *testing.T) {
+	defer restore()
 	SetUncountable([]string{"", ""})
 	if len(uncountableInflections) != 2 {
 		t.Errorf("Expected len 2, got %d", len(uncountableInflections))
