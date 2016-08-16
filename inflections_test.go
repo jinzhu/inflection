@@ -8,7 +8,6 @@ import (
 var inflections = map[string]string{
 	"star":        "stars",
 	"STAR":        "STARS",
-	"STaR":        "STaRS",
 	"Star":        "Stars",
 	"bus":         "buses",
 	"fish":        "fish",
@@ -92,6 +91,38 @@ func TestSingular(t *testing.T) {
 		if v := Singular(value); v != key {
 			t.Errorf("%v's singular should be %v, but got %v", value, key, v)
 		}
+	}
+}
+
+func TestAddPlural(t *testing.T) {
+	ln := len(pluralInflections)
+	AddPlural("", "")
+	if ln+1 != len(pluralInflections) {
+		t.Errorf("Expected len %d, got %d", ln+1, len(pluralInflections))
+	}
+}
+
+func TestAddSingular(t *testing.T) {
+	ln := len(singularInflections)
+	AddSingular("", "")
+	if ln+1 != len(singularInflections) {
+		t.Errorf("Expected len %d, got %d", ln+1, len(singularInflections))
+	}
+}
+
+func TestAddIrregular(t *testing.T) {
+	ln := len(irregularInflections)
+	AddIrregular("", "")
+	if ln+1 != len(irregularInflections) {
+		t.Errorf("Expected len %d, got %d", ln+1, len(irregularInflections))
+	}
+}
+
+func TestAddUncountable(t *testing.T) {
+	ln := len(uncountableInflections)
+	AddUncountable("", "")
+	if ln+2 != len(uncountableInflections) {
+		t.Errorf("Expected len %d, got %d", ln+2, len(uncountableInflections))
 	}
 }
 
