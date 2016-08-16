@@ -28,76 +28,89 @@ import (
 	"strings"
 )
 
-var pluralInflections = [][]string{
-	[]string{"([a-z])$", "${1}s"},
-	[]string{"s$", "s"},
-	[]string{"^(ax|test)is$", "${1}es"},
-	[]string{"(octop|vir)us$", "${1}i"},
-	[]string{"(octop|vir)i$", "${1}i"},
-	[]string{"(alias|status)$", "${1}es"},
-	[]string{"(bu)s$", "${1}ses"},
-	[]string{"(buffal|tomat)o$", "${1}oes"},
-	[]string{"([ti])um$", "${1}a"},
-	[]string{"([ti])a$", "${1}a"},
-	[]string{"sis$", "ses"},
-	[]string{"(?:([^f])fe|([lr])f)$", "${1}${2}ves"},
-	[]string{"(hive)$", "${1}s"},
-	[]string{"([^aeiouy]|qu)y$", "${1}ies"},
-	[]string{"(x|ch|ss|sh)$", "${1}es"},
-	[]string{"(matr|vert|ind)(?:ix|ex)$", "${1}ices"},
-	[]string{"^(m|l)ouse$", "${1}ice"},
-	[]string{"^(m|l)ice$", "${1}ice"},
-	[]string{"^(ox)$", "${1}en"},
-	[]string{"^(oxen)$", "${1}"},
-	[]string{"(quiz)$", "${1}zes"},
-}
-
-var singularInflections = [][]string{
-	[]string{"s$", ""},
-	[]string{"(ss)$", "${1}"},
-	[]string{"(n)ews$", "${1}ews"},
-	[]string{"([ti])a$", "${1}um"},
-	[]string{"((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)(sis|ses)$", "${1}sis"},
-	[]string{"(^analy)(sis|ses)$", "${1}sis"},
-	[]string{"([^f])ves$", "${1}fe"},
-	[]string{"(hive)s$", "${1}"},
-	[]string{"(tive)s$", "${1}"},
-	[]string{"([lr])ves$", "${1}f"},
-	[]string{"([^aeiouy]|qu)ies$", "${1}y"},
-	[]string{"(s)eries$", "${1}eries"},
-	[]string{"(m)ovies$", "${1}ovie"},
-	[]string{"(c)ookies$", "${1}ookie"},
-	[]string{"(x|ch|ss|sh)es$", "${1}"},
-	[]string{"^(m|l)ice$", "${1}ouse"},
-	[]string{"(bus)(es)?$", "${1}"},
-	[]string{"(o)es$", "${1}"},
-	[]string{"(shoe)s$", "${1}"},
-	[]string{"(cris|test)(is|es)$", "${1}is"},
-	[]string{"^(a)x[ie]s$", "${1}xis"},
-	[]string{"(octop|vir)(us|i)$", "${1}us"},
-	[]string{"(alias|status)(es)?$", "${1}"},
-	[]string{"^(ox)en", "${1}"},
-	[]string{"(vert|ind)ices$", "${1}ex"},
-	[]string{"(matr)ices$", "${1}ix"},
-	[]string{"(quiz)zes$", "${1}"},
-	[]string{"(database)s$", "${1}"},
-}
-
-var irregularInflections = [][]string{
-	[]string{"person", "people"},
-	[]string{"man", "men"},
-	[]string{"child", "children"},
-	[]string{"sex", "sexes"},
-	[]string{"move", "moves"},
-	[]string{"mombie", "mombies"},
-}
-
-var uncountableInflections = []string{"equipment", "information", "rice", "money", "species", "series", "fish", "sheep", "jeans", "police"}
-
 type inflection struct {
 	regexp  *regexp.Regexp
 	replace string
 }
+
+type Regular struct {
+	find    string
+	replace string
+}
+
+type Irregular struct {
+	singular string
+	plural   string
+}
+
+type RegularSlice []Regular
+type IrregularSlice []Irregular
+
+var pluralInflections = RegularSlice{
+	{find: "([a-z])$", replace: "${1}s"},
+	{find: "s$", replace: "s"},
+	{find: "^(ax|test)is$", replace: "${1}es"},
+	{find: "(octop|vir)us$", replace: "${1}i"},
+	{find: "(octop|vir)i$", replace: "${1}i"},
+	{find: "(alias|status)$", replace: "${1}es"},
+	{find: "(bu)s$", replace: "${1}ses"},
+	{find: "(buffal|tomat)o$", replace: "${1}oes"},
+	{find: "([ti])um$", replace: "${1}a"},
+	{find: "([ti])a$", replace: "${1}a"},
+	{find: "sis$", replace: "ses"},
+	{find: "(?:([^f])fe|([lr])f)$", replace: "${1}${2}ves"},
+	{find: "(hive)$", replace: "${1}s"},
+	{find: "([^aeiouy]|qu)y$", replace: "${1}ies"},
+	{find: "(x|ch|ss|sh)$", replace: "${1}es"},
+	{find: "(matr|vert|ind)(?:ix|ex)$", replace: "${1}ices"},
+	{find: "^(m|l)ouse$", replace: "${1}ice"},
+	{find: "^(m|l)ice$", replace: "${1}ice"},
+	{find: "^(ox)$", replace: "${1}en"},
+	{find: "^(oxen)$", replace: "${1}"},
+	{find: "(quiz)$", replace: "${1}zes"},
+}
+
+var singularInflections = RegularSlice{
+	{find: "s$", replace: ""},
+	{find: "(ss)$", replace: "${1}"},
+	{find: "(n)ews$", replace: "${1}ews"},
+	{find: "([ti])a$", replace: "${1}um"},
+	{find: "((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)(sis|ses)$", replace: "${1}sis"},
+	{find: "(^analy)(sis|ses)$", replace: "${1}sis"},
+	{find: "([^f])ves$", replace: "${1}fe"},
+	{find: "(hive)s$", replace: "${1}"},
+	{find: "(tive)s$", replace: "${1}"},
+	{find: "([lr])ves$", replace: "${1}f"},
+	{find: "([^aeiouy]|qu)ies$", replace: "${1}y"},
+	{find: "(s)eries$", replace: "${1}eries"},
+	{find: "(m)ovies$", replace: "${1}ovie"},
+	{find: "(c)ookies$", replace: "${1}ookie"},
+	{find: "(x|ch|ss|sh)es$", replace: "${1}"},
+	{find: "^(m|l)ice$", replace: "${1}ouse"},
+	{find: "(bus)(es)?$", replace: "${1}"},
+	{find: "(o)es$", replace: "${1}"},
+	{find: "(shoe)s$", replace: "${1}"},
+	{find: "(cris|test)(is|es)$", replace: "${1}is"},
+	{find: "^(a)x[ie]s$", replace: "${1}xis"},
+	{find: "(octop|vir)(us|i)$", replace: "${1}us"},
+	{find: "(alias|status)(es)?$", replace: "${1}"},
+	{find: "^(ox)en", replace: "${1}"},
+	{find: "(vert|ind)ices$", replace: "${1}ex"},
+	{find: "(matr)ices$", replace: "${1}ix"},
+	{find: "(quiz)zes$", replace: "${1}"},
+	{find: "(database)s$", replace: "${1}"},
+}
+
+var irregularInflections = IrregularSlice{
+	{singular: "person", plural: "people"},
+	{singular: "man", plural: "men"},
+	{singular: "child", plural: "children"},
+	{singular: "sex", plural: "sexes"},
+	{singular: "move", plural: "moves"},
+	{singular: "mombie", plural: "mombies"},
+}
+
+var uncountableInflections = []string{"equipment", "information", "rice", "money", "species", "series", "fish", "sheep", "jeans", "police"}
 
 var compiledPluralMaps []inflection
 var compiledSingularMaps []inflection
@@ -116,18 +129,18 @@ func compile() {
 
 	for _, value := range irregularInflections {
 		infs := []inflection{
-			inflection{regexp: regexp.MustCompile(strings.ToUpper(value[0]) + "$"), replace: strings.ToUpper(value[1])},
-			inflection{regexp: regexp.MustCompile(strings.Title(value[0]) + "$"), replace: strings.Title(value[1])},
-			inflection{regexp: regexp.MustCompile(value[0] + "$"), replace: value[1]},
+			inflection{regexp: regexp.MustCompile(strings.ToUpper(value.singular) + "$"), replace: strings.ToUpper(value.plural)},
+			inflection{regexp: regexp.MustCompile(strings.Title(value.singular) + "$"), replace: strings.Title(value.plural)},
+			inflection{regexp: regexp.MustCompile(value.singular + "$"), replace: value.plural},
 		}
 		compiledPluralMaps = append(compiledPluralMaps, infs...)
 	}
 
 	for _, value := range irregularInflections {
 		infs := []inflection{
-			inflection{regexp: regexp.MustCompile(strings.ToUpper(value[1]) + "$"), replace: strings.ToUpper(value[0])},
-			inflection{regexp: regexp.MustCompile(strings.Title(value[1]) + "$"), replace: strings.Title(value[0])},
-			inflection{regexp: regexp.MustCompile(value[1] + "$"), replace: value[0]},
+			inflection{regexp: regexp.MustCompile(strings.ToUpper(value.plural) + "$"), replace: strings.ToUpper(value.singular)},
+			inflection{regexp: regexp.MustCompile(strings.Title(value.plural) + "$"), replace: strings.Title(value.singular)},
+			inflection{regexp: regexp.MustCompile(value.plural + "$"), replace: value.singular},
 		}
 		compiledSingularMaps = append(compiledSingularMaps, infs...)
 	}
@@ -135,9 +148,9 @@ func compile() {
 	for i := len(pluralInflections) - 1; i >= 0; i-- {
 		value := pluralInflections[i]
 		infs := []inflection{
-			inflection{regexp: regexp.MustCompile(strings.ToUpper(value[0])), replace: strings.ToUpper(value[1])},
-			inflection{regexp: regexp.MustCompile(value[0]), replace: value[1]},
-			inflection{regexp: regexp.MustCompile("(?i)" + value[0]), replace: value[1]},
+			inflection{regexp: regexp.MustCompile(strings.ToUpper(value.find)), replace: strings.ToUpper(value.replace)},
+			inflection{regexp: regexp.MustCompile(value.find), replace: value.replace},
+			inflection{regexp: regexp.MustCompile("(?i)" + value.find), replace: value.replace},
 		}
 		compiledPluralMaps = append(compiledPluralMaps, infs...)
 	}
@@ -145,9 +158,9 @@ func compile() {
 	for i := len(singularInflections) - 1; i >= 0; i-- {
 		value := singularInflections[i]
 		infs := []inflection{
-			inflection{regexp: regexp.MustCompile(strings.ToUpper(value[0])), replace: strings.ToUpper(value[1])},
-			inflection{regexp: regexp.MustCompile(value[0]), replace: value[1]},
-			inflection{regexp: regexp.MustCompile("(?i)" + value[0]), replace: value[1]},
+			inflection{regexp: regexp.MustCompile(strings.ToUpper(value.find)), replace: strings.ToUpper(value.replace)},
+			inflection{regexp: regexp.MustCompile(value.find), replace: value.replace},
+			inflection{regexp: regexp.MustCompile("(?i)" + value.find), replace: value.replace},
 		}
 		compiledSingularMaps = append(compiledSingularMaps, infs...)
 	}
@@ -157,23 +170,67 @@ func init() {
 	compile()
 }
 
-func AddPlural(key, value string) {
-	pluralInflections = append(pluralInflections, []string{key, value})
+func AddPlural(find, replace string) {
+	pluralInflections = append(pluralInflections, Regular{find: find, replace: replace})
 	compile()
 }
 
-func AddSingular(key, value string) {
-	singularInflections = append(singularInflections, []string{key, value})
+func AddSingular(find, replace string) {
+	singularInflections = append(singularInflections, Regular{find: find, replace: replace})
 	compile()
 }
 
-func AddIrregular(key, value string) {
-	irregularInflections = append(irregularInflections, []string{key, value})
+func AddIrregular(singular, plural string) {
+	irregularInflections = append(irregularInflections, Irregular{singular, plural})
 	compile()
 }
 
 func AddUncountable(value string) {
 	uncountableInflections = append(uncountableInflections, value)
+	compile()
+}
+
+func GetPlural() RegularSlice {
+	plurals := make(RegularSlice, len(pluralInflections))
+	copy(plurals, pluralInflections)
+	return plurals
+}
+
+func GetSingular() RegularSlice {
+	singulars := make(RegularSlice, len(singularInflections))
+	copy(singulars, singularInflections)
+	return singulars
+}
+
+func GetIrregular() IrregularSlice {
+	irregular := make(IrregularSlice, len(irregularInflections))
+	copy(irregular, irregularInflections)
+	return irregular
+}
+
+func GetUncountable() []string {
+	uncountables := make([]string, len(uncountableInflections))
+	copy(uncountables, uncountableInflections)
+	return uncountables
+}
+
+func SetPlural(inflections RegularSlice) {
+	pluralInflections = inflections
+	compile()
+}
+
+func SetSingular(inflections RegularSlice) {
+	singularInflections = inflections
+	compile()
+}
+
+func SetIrregular(inflections IrregularSlice) {
+	irregularInflections = inflections
+	compile()
+}
+
+func SetUncountable(inflections []string) {
+	uncountableInflections = inflections
 	compile()
 }
 
