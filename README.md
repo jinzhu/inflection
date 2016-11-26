@@ -13,15 +13,15 @@ inflection.Plural("bus")    => "buses"
 inflection.Plural("BUS")    => "BUSES"
 inflection.Plural("Bus")    => "Buses"
 
-inflection.Singularize("people") => "person"
-inflection.Singularize("People") => "Person"
-inflection.Singularize("PEOPLE") => "PERSON"
-inflection.Singularize("buses")  => "bus"
-inflection.Singularize("BUSES")  => "BUS"
-inflection.Singularize("Buses")  => "Bus"
+inflection.Singular("people") => "person"
+inflection.Singular("People") => "Person"
+inflection.Singular("PEOPLE") => "PERSON"
+inflection.Singular("buses")  => "bus"
+inflection.Singular("BUSES")  => "BUS"
+inflection.Singular("Buses")  => "Bus"
 
 inflection.Plural("FancyPerson") => "FancyPeople"
-inflection.Singularize("FancyPeople") => "FancyPerson"
+inflection.Singular("FancyPeople") => "FancyPerson"
 ```
 
 ## Register Rules
