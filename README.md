@@ -37,3 +37,19 @@ inflection.AddPlural("(bu)s$", "${1}ses") # "bus" => "buses" / "BUS" => "BUSES" 
 inflection.AddSingular("(bus)(es)?$", "${1}") # "buses" => "bus" / "Buses" => "Bus" / "BUSES" => "BUS"
 ```
 
+## Supporting the project
+
+[![http://patreon.com/jinzhu](http://patreon_public_assets.s3.amazonaws.com/sized/becomeAPatronBanner.png)](http://patreon.com/jinzhu)
+
+
+## Author
+
+**jinzhu**
+
+* <http://github.com/jinzhu>
+* <wosmvp@gmail.com>
+* <http://twitter.com/zhangjinzhu>
+
+## License
+
+Released under the [MIT License](http://www.opensource.org/licenses/MIT).
