@@ -114,6 +114,10 @@ var irregularInflections = IrregularSlice{
 	{"sex", "sexes"},
 	{"move", "moves"},
 	{"mombie", "mombies"},
+	{"goose", "geese"},
+	{"foot", "feet"},
+	{"moose", "moose"},
+	{"tooth", "teeth"},
 }
 
 var uncountableInflections = []string{"equipment", "information", "rice", "money", "species", "series", "fish", "sheep", "jeans", "police"}
