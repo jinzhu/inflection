@@ -116,7 +116,7 @@ var irregularInflections = IrregularSlice{
 	{"mombie", "mombies"},
 }
 
-var uncountableInflections = []string{"equipment", "information", "rice", "money", "species", "series", "fish", "sheep", "jeans", "police"}
+var uncountableInflections = []string{"equipment", "information", "rice", "money", "species", "series", "fish", "sheep", "jeans", "police", "evidence"}
 
 var compiledPluralMaps []inflection
 var compiledSingularMaps []inflection
