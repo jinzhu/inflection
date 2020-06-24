@@ -114,10 +114,13 @@ var irregularInflections = IrregularSlice{
 	{"sex", "sexes"},
 	{"move", "moves"},
 	{"mombie", "mombies"},
+	{"goose", "geese"},
 	{"foot", "feet"},
+	{"moose", "moose"},
+	{"tooth", "teeth"},
 }
 
-var uncountableInflections = []string{"equipment", "information", "rice", "money", "species", "series", "fish", "sheep", "jeans", "police", "evidence"}
+var uncountableInflections = []string{"equipment", "information", "rice", "money", "species", "series", "fish", "sheep", "jeans", "police", "milk", "salt", "time", "water", "paper", "food", "art", "cash", "music", "help", "luck", "oil", "progress", "rain", "research", "shopping", "software", "traffic"}
 
 var compiledPluralMaps []inflection
 var compiledSingularMaps []inflection
