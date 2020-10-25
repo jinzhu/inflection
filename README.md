@@ -31,11 +31,11 @@ Standard rules are from Rails's ActiveSupport (https://github.com/rails/rails/bl
 
 If you want to register more rules, follow:
 
-```
+```go
 inflection.AddUncountable("fish")
 inflection.AddIrregular("person", "people")
-inflection.AddPlural("(bu)s$", "${1}ses") # "bus" => "buses" / "BUS" => "BUSES" / "Bus" => "Buses"
-inflection.AddSingular("(bus)(es)?$", "${1}") # "buses" => "bus" / "Buses" => "Bus" / "BUSES" => "BUS"
+inflection.AddPlural("(bu)s$", "${1}ses") // "bus" => "buses" / "BUS" => "BUSES" / "Bus" => "Buses"
+inflection.AddSingular("(bus)(es)?$", "${1}") // "buses" => "bus" / "Buses" => "Bus" / "BUSES" => "BUS"
 ```
 
 ## Contributing
