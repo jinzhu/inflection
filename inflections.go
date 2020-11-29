@@ -74,6 +74,7 @@ var pluralInflections = RegularSlice{
 	{"^(ox)$", "${1}en"},
 	{"^(oxen)$", "${1}"},
 	{"(quiz)$", "${1}zes"},
+	{"(drive)$", "${1}s"},
 }
 
 var singularInflections = RegularSlice{
@@ -105,6 +106,7 @@ var singularInflections = RegularSlice{
 	{"(matr)ices$", "${1}ix"},
 	{"(quiz)zes$", "${1}"},
 	{"(database)s$", "${1}"},
+	{"(drive)s$", "${1}"},
 }
 
 var irregularInflections = IrregularSlice{
