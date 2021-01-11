@@ -77,6 +77,8 @@ var inflections = map[string]string{
 	"traffic":     "traffic",
 	"zombie":      "zombies",
 	"campus":      "campuses",
+	"harddrive":   "harddrives",
+	"drive":       "drives",
 }
 
 // storage is used to restore the state of the global variables
