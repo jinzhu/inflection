@@ -2,7 +2,7 @@
 
 Inflection pluralizes and singularizes English nouns
 
-[![wercker status](https://app.wercker.com/status/f8c7432b097d1f4ce636879670be0930/s/master "wercker status")](https://app.wercker.com/project/byKey/f8c7432b097d1f4ce636879670be0930)
+[![Build Status](https://github.com/jinzhu/inflection/actions/workflows/go.yml/badge.svg)](https://github.com/jinzhu/inflection/actions/workflows/go.yml)
 
 ## Basic Usage
 
