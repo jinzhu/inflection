@@ -79,7 +79,9 @@ var inflections = map[string]string{
 	"campus":      "campuses",
 	"harddrive":   "harddrives",
 	"drive":       "drives",
-	"leaf":        "leaves",
+	"leaf":         "leaves",
+	"axis":        "axes",
+	"career_axis": "career_axes",
 }
 
 // storage is used to restore the state of the global variables
