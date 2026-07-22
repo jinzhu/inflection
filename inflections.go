@@ -9,8 +9,8 @@ Package inflection pluralizes and singularizes English nouns.
 		inflection.Singular("People") => "Person"
 		inflection.Singular("PEOPLE") => "PERSON"
 
-		inflection.Plural("FancyPerson") => "FancydPeople"
-		inflection.Singular("FancyPeople") => "FancydPerson"
+		inflection.Plural("FancyPerson") => "FancyPeople"
+		inflection.Singular("FancyPeople") => "FancyPerson"
 
 Standard rules are from Rails's ActiveSupport (https://github.com/rails/rails/blob/master/activesupport/lib/active_support/inflections.rb)
 
