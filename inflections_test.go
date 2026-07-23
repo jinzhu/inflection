@@ -95,17 +95,18 @@ var backup = storage{}
 
 func init() {
 	AddIrregular("criterion", "criteria")
-	copy(backup.singulars, singularInflections)
-	copy(backup.plurals, pluralInflections)
-	copy(backup.irregulars, irregularInflections)
-	copy(backup.uncountables, uncountableInflections)
+	backup.singulars = append(RegularSlice(nil), singularInflections...)
+	backup.plurals = append(RegularSlice(nil), pluralInflections...)
+	backup.irregulars = append(IrregularSlice(nil), irregularInflections...)
+	backup.uncountables = append([]string(nil), uncountableInflections...)
 }
 
 func restore() {
-	copy(singularInflections, backup.singulars)
-	copy(pluralInflections, backup.plurals)
-	copy(irregularInflections, backup.irregulars)
-	copy(uncountableInflections, backup.uncountables)
+	singularInflections = append(RegularSlice(nil), backup.singulars...)
+	pluralInflections = append(RegularSlice(nil), backup.plurals...)
+	irregularInflections = append(IrregularSlice(nil), backup.irregulars...)
+	uncountableInflections = append([]string(nil), backup.uncountables...)
+	compile()
 }
 
 func TestPlural(t *testing.T) {

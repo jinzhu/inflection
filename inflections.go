@@ -111,7 +111,10 @@ var singularInflections = RegularSlice{
 
 var irregularInflections = IrregularSlice{
 	{"person", "people"},
+	// human before man so "human" is not rewritten as "humen"
+	{"human", "humans"},
 	{"man", "men"},
+	{"quota", "quotas"},
 	{"child", "children"},
 	{"sex", "sexes"},
 	{"move", "moves"},
@@ -154,6 +157,11 @@ func compile() {
 			{regexp: regexp.MustCompile(strings.ToUpper(value.plural) + "$"), replace: strings.ToUpper(value.singular)},
 			{regexp: regexp.MustCompile(strings.Title(value.plural) + "$"), replace: strings.Title(value.singular)},
 			{regexp: regexp.MustCompile(value.plural + "$"), replace: value.singular},
+			// Keep the singular form itself from being rewritten by later regular rules
+			// (e.g. "quota" must not become "quotum" via ([ti])a$ → um).
+			{regexp: regexp.MustCompile(strings.ToUpper(value.singular) + "$"), replace: strings.ToUpper(value.singular)},
+			{regexp: regexp.MustCompile(strings.Title(value.singular) + "$"), replace: strings.Title(value.singular)},
+			{regexp: regexp.MustCompile(value.singular + "$"), replace: value.singular},
 		}
 		compiledSingularMaps = append(compiledSingularMaps, infs...)
 	}
