@@ -95,18 +95,19 @@ var backup = storage{}
 
 func init() {
 	AddIrregular("criterion", "criteria")
-	copy(backup.singulars, singularInflections)
-	copy(backup.plurals, pluralInflections)
-	copy(backup.irregulars, irregularInflections)
-	copy(backup.uncountables, uncountableInflections)
+	backup.singulars = append(RegularSlice(nil), singularInflections...)
+	backup.plurals = append(RegularSlice(nil), pluralInflections...)
+	backup.irregulars = append(IrregularSlice(nil), irregularInflections...)
+	backup.uncountables = append([]string(nil), uncountableInflections...)
 }
 
 func restore() {
-	copy(singularInflections, backup.singulars)
-	copy(pluralInflections, backup.plurals)
-	copy(irregularInflections, backup.irregulars)
-	copy(uncountableInflections, backup.uncountables)
+	SetSingular(append(RegularSlice(nil), backup.singulars...))
+	SetPlural(append(RegularSlice(nil), backup.plurals...))
+	SetIrregular(append(IrregularSlice(nil), backup.irregulars...))
+	SetUncountable(append([]string(nil), backup.uncountables...))
 }
+
 
 func TestPlural(t *testing.T) {
 	for key, value := range inflections {
@@ -235,3 +236,16 @@ func TestSetUncountable(t *testing.T) {
 		t.Errorf("Expected len 2, got %d", len(uncountableInflections))
 	}
 }
+
+func TestRestore(t *testing.T) {
+	origPluralCount := len(GetPlural())
+	SetPlural(RegularSlice{{}, {}})
+	if len(GetPlural()) != 2 {
+		t.Fatalf("expected len 2, got %d", len(GetPlural()))
+	}
+	restore()
+	if len(GetPlural()) != origPluralCount {
+		t.Errorf("expected restored len %d, got %d", origPluralCount, len(GetPlural()))
+	}
+}
+
