@@ -16,6 +16,7 @@ var inflections = map[string]string{
 	"ability":     "abilities",
 	"agency":      "agencies",
 	"movie":       "movies",
+	"calorie":     "calories",
 	"archive":     "archives",
 	"index":       "indices",
 	"wife":        "wives",
