@@ -16,6 +16,7 @@ var inflections = map[string]string{
 	"ability":     "abilities",
 	"agency":      "agencies",
 	"movie":       "movies",
+	"calorie":     "calories",
 	"archive":     "archives",
 	"index":       "indices",
 	"wife":        "wives",
@@ -140,6 +141,52 @@ func TestSingular(t *testing.T) {
 	}
 }
 
+func TestCalorie(t *testing.T) {
+	tests := []struct {
+		singular string
+		plural   string
+	}{
+		{"calorie", "calories"},
+		{"Calorie", "Calories"},
+		{"CALORIE", "CALORIES"},
+		{"kilocalorie", "kilocalories"},
+		{"Kilocalorie", "Kilocalories"},
+		{"KILOCALORIE", "KILOCALORIES"},
+		{"megacalorie", "megacalories"},
+		{"Megacalorie", "Megacalories"},
+	}
+
+	for _, tt := range tests {
+		if got := Plural(tt.singular); got != tt.plural {
+			t.Errorf("Plural(%q) = %q, want %q", tt.singular, got, tt.plural)
+		}
+		if got := Singular(tt.plural); got != tt.singular {
+			t.Errorf("Singular(%q) = %q, want %q", tt.plural, got, tt.singular)
+		}
+	}
+
+	// Idempotency: Singular of already-singular, Plural of already-plural
+	idempotentTests := []struct {
+		fn       func(string) string
+		name     string
+		input    string
+		expected string
+	}{
+		{Singular, "Singular", "calorie", "calorie"},
+		{Singular, "Singular", "Calorie", "Calorie"},
+		{Singular, "Singular", "CALORIE", "CALORIE"},
+		{Plural, "Plural", "calories", "calories"},
+		{Plural, "Plural", "Calories", "Calories"},
+		{Plural, "Plural", "CALORIES", "CALORIES"},
+	}
+
+	for _, tt := range idempotentTests {
+		if got := tt.fn(tt.input); got != tt.expected {
+			t.Errorf("%s(%q) = %q, want %q", tt.name, tt.input, got, tt.expected)
+		}
+	}
+}
+
 func TestAddPlural(t *testing.T) {
 	defer restore()
 	ln := len(pluralInflections)
@@ -235,3 +282,4 @@ func TestSetUncountable(t *testing.T) {
 		t.Errorf("Expected len 2, got %d", len(uncountableInflections))
 	}
 }
+

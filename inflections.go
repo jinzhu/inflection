@@ -92,6 +92,7 @@ var singularInflections = RegularSlice{
 	{"(s)eries$", "${1}eries"},
 	{"(m)ovies$", "${1}ovie"},
 	{"(c)ookies$", "${1}ookie"},
+	{"(c)alories$", "${1}alorie"},
 	{"(x|ch|ss|sh)es$", "${1}"},
 	{"^(m|l)ice$", "${1}ouse"},
 	{"(bus|campus)(es)?$", "${1}"},
