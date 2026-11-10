@@ -48,6 +48,7 @@ var inflections = map[string]string{
 	"quiz":        "quizzes",
 	"perspective": "perspectives",
 	"ox":          "oxen",
+	"oxen_yoke":   "oxen_yokes",
 	"photo":       "photos",
 	"buffalo":     "buffaloes",
 	"tomato":      "tomatoes",
