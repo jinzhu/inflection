@@ -101,7 +101,7 @@ var singularInflections = RegularSlice{
 	{"^(a)x[ie]s$", "${1}xis"},
 	{"(octop|vir)(us|i)$", "${1}us"},
 	{"(alias|status)(es)?$", "${1}"},
-	{"^(ox)en", "${1}"},
+	{"^(ox)en$", "${1}"},
 	{"(vert|ind)ices$", "${1}ex"},
 	{"(matr)ices$", "${1}ix"},
 	{"(quiz)zes$", "${1}"},
